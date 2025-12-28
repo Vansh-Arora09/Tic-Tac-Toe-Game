@@ -34,11 +34,11 @@ tic-tac-toe/
 
 ├── src/
 
-│   └── main/
+│       └── main/
 
-│       └── java/
+│           └── java/
 
-│           └── TicTacToe.java
+│               └── TicTacToe.java
 
 │
 
@@ -48,7 +48,7 @@ tic-tac-toe/
 
 └── target/
 
-   └── tic-tac-toe-1.0.jar
+       └── tic-tac-toe-1.0.jar
     
 
 # ⚙️ Maven Commands Used
