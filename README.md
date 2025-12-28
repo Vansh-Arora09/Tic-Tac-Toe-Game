@@ -48,7 +48,7 @@ tic-tac-toe/
 
 └── target/
 
-       └── tic-tac-toe-1.0.jar
+       └── tic-tac-toe-console-1.0-SNAPSHOT.jar
     
 
 # ⚙️ Maven Commands Used
