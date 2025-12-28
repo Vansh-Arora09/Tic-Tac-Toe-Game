@@ -14,7 +14,7 @@ Maven for build automation
 
 Git & GitHub for version control
 
-🛠️ Technologies Used
+# 🛠️ Technologies Used
 
 Programming Language: Java
 
@@ -26,7 +26,8 @@ Repository Hosting: GitHub
 
 Execution Environment: Command Line / Terminal
 
-📂 Project Structure
+# 📂 Project Structure
+
 tic-tac-toe/
 │
 ├── src/
@@ -39,7 +40,7 @@ tic-tac-toe/
 └── target/
     └── tic-tac-toe-1.0.jar
 
-⚙️ Maven Commands Used
+# ⚙️ Maven Commands Used
 mvn clean
 mvn compile
 mvn package
@@ -51,14 +52,14 @@ mvn compile – Compiles Java source code
 
 mvn package – Generates an executable JAR file
 
-▶️ How to Run the Project
+# ▶️ How to Run the Project
 Step 1: Build the Project
 mvn clean package
 
 Step 2: Run the JAR File
 java -jar target/tic-tac-toe-1.0.jar
 
-🎯 Game Features
+# 🎯 Game Features
 
 Two-player turn-based gameplay
 
@@ -72,7 +73,7 @@ Draw (tie) condition handling
 
 Clear messages after win, loss, or draw
 
-🧠 Core Game Logic
+# 🧠 Core Game Logic
 
 The game uses a 3×3 board represented by a 2D array
 
@@ -88,6 +89,6 @@ Diagonal
 
 The game ends when a player wins or all cells are filled
 
-📦 JAR File Generation
+# 📦 JAR File Generation
 
 The project is configured using pom.xml to generate an executable JAR file, allowing the application to run independently of any IDE. This demonstrates proper Maven configuration and build automation.
