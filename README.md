@@ -29,16 +29,27 @@ Execution Environment: Command Line / Terminal
 # 📂 Project Structure
 
 tic-tac-toe/
+
 │
+
 ├── src/
+
 │   └── main/
+
 │       └── java/
+
 │           └── TicTacToe.java
+
 │
+
 ├── pom.xml
+
 ├── README.md
+
 └── target/
-    └── tic-tac-toe-1.0.jar
+
+   └── tic-tac-toe-1.0.jar
+    
 
 # ⚙️ Maven Commands Used
 mvn clean
