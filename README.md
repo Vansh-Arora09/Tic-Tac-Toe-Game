@@ -134,5 +134,6 @@ pipeline {
 Because the final package is completely containerized and stored on the public cloud registry, any client machine in the world can instantly pull and execute this game with a single command without needing Java, Maven, or project source code installed locally.
 
 To Run the Interactive Game:
-Bash
+```Bash
 docker run -it --rm vansharora09/tictactoe-pipeline-game:latest
+```
