@@ -1,105 +1,138 @@
-# 🎮 Tic Tac Toe Game (Java + Maven + Git)
+# Automated Java Delivery Pipeline: A Multi-Stage CI/CD Integration using Docker, Jenkins, and GitHub Actions
 
- A simple console-based Tic Tac Toe game developed using Java and built with Apache Maven, demonstrating essential DevOps practices such as build automation, version control, and executable JAR creation.
+## 📌 Project Overview
+In modern software engineering, manual building processes and host machine dependencies (such as specific Java versions, Classpath configurations, and Maven dependencies) often lead to environment-related deployment failures—commonly known as the "it works on my machine" paradox. 
 
-# 📌 Project Overview
+This project addresses these exact challenges by replacing manual build steps with a structured, automated, zero-touch delivery pipeline. Using a console-driven Java Tic-Tac-Toe game as the core application, this ecosystem ensures that every code modification is automatically validated, compiled, encapsulated within an optimized, ultra-lightweight portable container, and distributed globally to an artifact registry.
 
-This project was developed as part of an academic assignment to gain hands-on experience with DevOps tools. The application is a two-player Tic Tac Toe game that runs in the terminal and can be executed using a generated JAR file without any IDE dependency.
+---
 
-The project integrates:
+## 🍕 Project Analogy: The Automated Pizzeria
+To understand the core architecture of this DevOps stack, imagine it as an **Automated Pizzeria** designed to prep, bake, box, and distribute identical high-quality pizzas worldwide without human chef intervention:
+* **The Recipe (Source Code):** The developer commits code updates to GitHub.
+* **Dough & Sauce Quality Assurance (GitHub Actions):** An automated kitchen gatekeeper instantly tests the ingredients (compiles code and runs unit tests) to ensure everything is perfect.
+* **The Kitchen Orchestrator (Jenkins):** Once validated, Jenkins pulls the ingredients, coordinates the assembly line, and manages the lifecycle tracking.
+* **The Automated Oven & Standardized Box (Docker Multi-Stage Build):** A heavy commercial oven bakes the food (Maven Build stage), and passes only the final product into a tiny, standardized delivery box (lightweight Alpine JRE runtime).
+* **The Central Warehouse & Drone Fleet (Docker Hub):** The sealed boxes are cataloged into a global warehouse registry, ready for immediate, instant consumption on any device anywhere.
 
-Java for application logic
+---
 
-Maven for build automation
+## 🛠️ Tools & Technologies Used
+* **Continuous Integration (CI) Layer:** GitHub Actions
+* **Central Orchestration Server:** Jenkins (Pipeline-as-Code via localhost:9090)
+* **Containerization Engine:** Docker Desktop (WSL2 Backend)
+* **Build Automation Lifecycle:** Apache Maven 3.9.6
+* **Base Environments:** Eclipse Temurin (JDK 17 & JRE 17 Alpine)
+* **Artifact Registry:** Docker Hub (`vansharora09`)
 
-Git & GitHub for version control
+---
 
-# 🛠️ Technologies Used
+## 🏗️ Architecture & Implementation Pipeline (Step-by-Step)
 
-Programming Language: Java
+### 🔹 Phase I: Container Blueprinting (`Dockerfile`)
+The runtime image leverages a **Multi-Stage Build strategy**. This isolates the heavy compilation dependencies (Maven tools) to a temporary builder stage, copying only the finalized executable `.jar` file into an ultra-small Alpine Linux JRE layer to minimize the production attack surface and container footprint.
 
-Build Tool: Apache Maven
+```dockerfile
+# Stage 1: Build & Package (Using Maven + Eclipse Temurin JDK 17)
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
+WORKDIR /app
 
-Version Control: Git
+# Copy configuration and source code
+COPY pom.xml .
+COPY src ./src
 
-Repository Hosting: GitHub
+# Compile and package into an executable JAR file
+RUN mvn clean package -DskipTests
 
-Execution Environment: Command Line / Terminal
+# Stage 2: Minimalist Runtime Environment (Using clean JRE 17 Alpine)
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /workspace
 
-# 📂 Project Structure
+# Copy the final JAR artifact from the builder stage
+COPY --from=builder /app/target/*.jar app.jar
 
-tic-tac-toe/
+# Command to execute your console application
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
 
-│
+### 🔹 Phase II: Workflow Automation (.github/workflows/ci-validation.yml)
+Acts as the automated gatekeeper. Every time a developer executes a push to GitHub, an external cloud runner instantiates, configures JDK 17, and triggers the test suites. If code logic contains bugs, the build pipeline breaks before reaching production.
 
-├── src/
+```YAML
+name: Java CI Gatekeeper Validation
 
-│       └── main/
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
-│           └── java/
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
 
-│               └── TicTacToe.java
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
 
-│
+    - name: Set up JDK 17 (Eclipse Temurin)
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'maven'
 
-├── pom.xml
+    - name: Build and Run Test Suite with Maven
+      run: mvn clean test
+```
 
-├── README.md
+###🔹 Phase III: Jenkins Orchestration (Jenkinsfile)
+Jenkins manages the internal deployment lifecycle using a structured declarative script ("Pipeline-as-Code"). It structures delivery into four unique visualization swimlanes: checking out code, building artifacts, packaging containers, and executing registry uploads.
 
-└── target/
-
-       └── tic-tac-toe-console-1.0-SNAPSHOT.jar
+```Groovy
+pipeline {
+    agent any
     
+    environment {
+        DOCKER_IMAGE = 'tictactoe-pipeline-game'
+        REGISTRY_USER = 'vansharora09'
+    }
+    
+    stages {
+        stage('Automated Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Maven Packaging') {
+            steps {
+                bat 'mvn clean package -DskipTests'
+            }
+        }
+        
+        stage('Docker Blueprint Build') {
+            steps {
+                bat "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+                bat "docker tag ${DOCKER_IMAGE}:${BUILD_NUMBER} ${REGISTRY_USER}/${DOCKER_IMAGE}:latest"
+            }
+        }
+        
+        stage('Registry Distribution') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    bat "docker login -u ${USER} -p ${PASS}"
+                    bat "docker push ${REGISTRY_USER}/${DOCKER_IMAGE}:latest"
+                }
+            }
+        }
+    }
+}
+```
 
-# ⚙️ Maven Commands Used
-mvn clean
-mvn compile
-mvn package
+### 🚀 Phase IV: System Validation (How to Run Globally)
+Because the final package is completely containerized and stored on the public cloud registry, any client machine in the world can instantly pull and execute this game with a single command without needing Java, Maven, or project source code installed locally.
 
-
-mvn clean – Removes previous build files
-
-mvn compile – Compiles Java source code
-
-mvn package – Generates an executable JAR file
-
-# ▶️ How to Run the Project
-Step 1: Build the Project
-mvn clean package
-
-Step 2: Run the JAR File
-java -jar target/tic-tac-toe-1.0.jar
-
-# 🎯 Game Features
-
-Two-player turn-based gameplay
-
-Console-based user interface
-
-Input validation for moves
-
-Automatic win detection
-
-Draw (tie) condition handling
-
-Clear messages after win, loss, or draw
-
-# 🧠 Core Game Logic
-
-The game uses a 3×3 board represented by a 2D array
-
-Players alternate turns using symbols X and O
-
-Winning conditions are checked after every move:
-
-Horizontal
-
-Vertical
-
-Diagonal
-
-The game ends when a player wins or all cells are filled
-
-# 📦 JAR File Generation
-
-The project is configured using pom.xml to generate an executable JAR file, allowing the application to run independently of any IDE. This demonstrates proper Maven configuration and build automation.
+To Run the Interactive Game:
+Bash
+docker run -it --rm vansharora09/tictactoe-pipeline-game:latest
