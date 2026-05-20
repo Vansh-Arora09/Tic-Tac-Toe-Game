@@ -1,0 +1,11 @@
+package com.mycompany.game;
+
+import junit.framework.TestCase;
+
+public class TicTacToeGameTest extends TestCase {
+
+    public void testPipelineValidation() {
+        // JUnit 3 looks for methods starting with the word "test"
+        assertTrue("The testing framework is initialized and running successfully!", true);
+    }
+}

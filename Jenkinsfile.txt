@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_IMAGE = 'tictactoe-pipeline-game'
+        REGISTRY_USER = 'vansharora09' // Replace with your Docker Hub user
+    }
+    
+    stages {
+        stage('Automated Checkout') {
+            steps {
+                // Pulls the latest stable branch code
+                checkout scm
+            }
+        }
+        
+        stage('Maven Packaging') {
+            steps {
+                // Compiles and constructs our underlying deployment package
+                bat 'mvn clean package -DskipTests'
+            }
+        }
+        
+        stage('Docker Blueprint Build') {
+            steps {
+                // Executes the multi-stage optimization build
+                bat "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+                bat "docker tag ${DOCKER_IMAGE}:${BUILD_NUMBER} ${REGISTRY_USER}/${DOCKER_IMAGE}:latest"
+            }
+        }
+        
+        stage('Registry Distribution') {
+            steps {
+                // Pushes to registry for absolute hardware portability
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    bat "docker login -u ${USER} -p ${PASS}"
+                    bat "docker push ${REGISTRY_USER}/${DOCKER_IMAGE}:latest"
+                }
+            }
+        }
+    }
+}
