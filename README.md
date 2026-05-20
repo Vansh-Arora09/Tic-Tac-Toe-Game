@@ -1,29 +1,45 @@
-# Automated Java Delivery Pipeline: A Multi-Stage CI/CD Integration using Docker, Jenkins, and GitHub Actions
+# 🎮 Automated Java Delivery Pipeline: A Multi-Stage CI/CD Integration
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Badge"/>
+  <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" alt="Jenkins Badge"/>
+  <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions Badge"/>
+  <img src="https://img.shields.io/badge/Java_17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 17 Badge"/>
+  <img src="https://img.shields.io/badge/Apache_Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white" alt="Maven Badge"/>
+</p>
+
+---
 
 ## 📌 Project Overview
-In modern software engineering, manual building processes and host machine dependencies (such as specific Java versions, Classpath configurations, and Maven dependencies) often lead to environment-related deployment failures—commonly known as the "it works on my machine" paradox. 
 
-This project addresses these exact challenges by replacing manual build steps with a structured, automated, zero-touch delivery pipeline. Using a console-driven Java Tic-Tac-Toe game as the core application, this ecosystem ensures that every code modification is automatically validated, compiled, encapsulated within an optimized, ultra-lightweight portable container, and distributed globally to an artifact registry.
+In modern software engineering, manual building processes and host machine dependencies (such as specific Java versions, Classpath configurations, and Maven dependencies) often lead to environment-related deployment failures—commonly known as the **"it works on my machine"** paradox. 
+
+This project addresses these exact challenges by replacing manual build steps with a structured, automated, zero-touch delivery pipeline. Using a console-driven Java Tic-Tac-Toe game as the core application, this ecosystem ensures that every code modification is automatically validated, compiled, encapsulated within an optimized, ultra-lightweight portable container, and distributed globally to an public artifact registry.
 
 ---
 
 ## 🍕 Project Analogy: The Automated Pizzeria
+
 To understand the core architecture of this DevOps stack, imagine it as an **Automated Pizzeria** designed to prep, bake, box, and distribute identical high-quality pizzas worldwide without human chef intervention:
-* **The Recipe (Source Code):** The developer commits code updates to GitHub.
-* **Dough & Sauce Quality Assurance (GitHub Actions):** An automated kitchen gatekeeper instantly tests the ingredients (compiles code and runs unit tests) to ensure everything is perfect.
-* **The Kitchen Orchestrator (Jenkins):** Once validated, Jenkins pulls the ingredients, coordinates the assembly line, and manages the lifecycle tracking.
-* **The Automated Oven & Standardized Box (Docker Multi-Stage Build):** A heavy commercial oven bakes the food (Maven Build stage), and passes only the final product into a tiny, standardized delivery box (lightweight Alpine JRE runtime).
-* **The Central Warehouse & Drone Fleet (Docker Hub):** The sealed boxes are cataloged into a global warehouse registry, ready for immediate, instant consumption on any device anywhere.
+
+* **📜 The Recipe (Source Code):** The developer commits code updates to GitHub.
+* **🧪 Dough & Sauce Quality Assurance (GitHub Actions):** An automated kitchen gatekeeper instantly tests the ingredients (compiles code and runs unit tests) to ensure everything is perfect.
+* **🕹️ The Kitchen Orchestrator (Jenkins):** Once validated, Jenkins pulls the ingredients, coordinates the assembly line, and manages the lifecycle tracking.
+* **📦 The Automated Oven & Standardized Box (Docker Multi-Stage Build):** A heavy commercial oven bakes the food (*Maven Build stage*), and passes only the final product into a tiny, standardized delivery box (*lightweight Alpine JRE runtime*).
+* **🛸 The Central Warehouse & Drone Fleet (Docker Hub):** The sealed boxes are cataloged into a global warehouse registry, ready for immediate, instant consumption on any device anywhere.
 
 ---
 
 ## 🛠️ Tools & Technologies Used
-* **Continuous Integration (CI) Layer:** GitHub Actions
-* **Central Orchestration Server:** Jenkins (Pipeline-as-Code via localhost:9090)
-* **Containerization Engine:** Docker Desktop (WSL2 Backend)
-* **Build Automation Lifecycle:** Apache Maven 3.9.6
-* **Base Environments:** Eclipse Temurin (JDK 17 & JRE 17 Alpine)
-* **Artifact Registry:** Docker Hub (`vansharora09`)
+
+| Layer | Technology | Usage Description |
+| :--- | :--- | :--- |
+| **🚀 CI Gatekeeper** | **GitHub Actions** | Automated validation runner checking system health on code push. |
+| **⚙️ Pipeline Engine** | **Jenkins Server** | Orchestrates downstream multi-stage pipeline logic via `localhost:9090`. |
+| **🐳 Virtualization** | **Docker Desktop** | Handles structural isolation using a WSL2 virtualization backend. |
+| **📦 Build Automation** | **Apache Maven 3.9.6** | Compiles project files, resolves dependencies, and builds the `.jar` package. |
+| **☕ Runtime Image** | **Eclipse Temurin** | Combines clean JDK 17 environments with minimalist JRE 17 Alpine layers. |
+| **🌐 Artifact Hosting** | **Docker Hub** | Public distribution layer mapping image endpoints to user account `vansharora09`. |
 
 ---
 
