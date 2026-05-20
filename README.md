@@ -86,7 +86,7 @@ jobs:
       run: mvn clean test
 ```
 
-###🔹 Phase III: Jenkins Orchestration (Jenkinsfile)
+### 🔹 Phase III: Jenkins Orchestration (Jenkinsfile)
 Jenkins manages the internal deployment lifecycle using a structured declarative script ("Pipeline-as-Code"). It structures delivery into four unique visualization swimlanes: checking out code, building artifacts, packaging containers, and executing registry uploads.
 
 ```Groovy
