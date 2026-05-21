@@ -1,7 +1,24 @@
-# Maven build directories 
-#/target/ 
+# Maven build directories
+target/
+*.jar
+*.war
+*.ear
+
+# Docker temporary files
+.docker/
+docker-compose.override.yml
+
+# Jenkins specific local files (If you run tests locally)
+*.log
+.jenkins/
+
 # IDE files 
 .idea/ 
 *.iml 
+.classpath
+.project
+.settings/
+
 # OS files 
-.DS_Store 
+.DS_Store
+Thumbs.db
